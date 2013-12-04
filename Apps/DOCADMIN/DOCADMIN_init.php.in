@@ -20,7 +20,7 @@ global $app_const;
 
 $app_const= array(
   "INIT"    => "yes",
-  "VERSION" => "@VERSION_DOCADMIN@-@RELEASE_DOCADMIN@"
+  "VERSION" => "@VERSION@-@RELEASE@"
 );
 
 ?>

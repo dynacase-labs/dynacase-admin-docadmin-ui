@@ -1,5 +1,5 @@
 PACKAGE = dynacase-admin-docadmin-ui
-VERSION = @VERSION_DOCADMIN@
+VERSION = @VERSION@
 utildir = @PUBRULE@
 pubdir = @prefix@
 srcdir = @srcdir@
@@ -10,7 +10,7 @@ GZIP_ENV = --best
 
 export PACKAGE utildir pubdir applib appname
 
-SUBDIR= Actions Apps Data Images Scripts
+SUBDIR= Actions Apps Data Images Scripts locale
 
 include $(utildir)/PubRule
 
