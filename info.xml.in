@@ -38,7 +38,4 @@
         <process command="programs/update_catalog" />
     </post-upgrade>
 
-    <changelog>
-    </changelog>
-
 </module>
