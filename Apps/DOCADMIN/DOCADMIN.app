@@ -19,6 +19,11 @@ $app_acl = array(
         "name"          => "DOCADMIN",
         "description"   => N_("docadmin:DOCADMIN Access"),
         "admin"         => true
+    ),
+    array(
+        "name"          => "EXPORT",
+        "description"   => N_("docadmin:Export Access"),
+        "admin"         => true
     )
 );
 
@@ -63,6 +68,13 @@ $action_desc = array(
         "name"       => "SYSTEM_GETDATA",
         "acl" => "DOCADMIN",
         "short_name" => N_("docadmin:View system document")
+    ),
+    array(
+        "name"       => "EXPORTFOLDER",
+        "acl" => "EXPORT",
+        "short_name" => N_("docadmin:Export"),
+        "script"     => "export_folder.php",
+        "function"   => "export_folder"
     ),
 );
 
