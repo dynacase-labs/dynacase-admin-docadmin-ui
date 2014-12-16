@@ -68,6 +68,7 @@ function timers_admin_result(Action & $action)
     }
     if ($type == "skip") {
         $q->addQuery("tododate is not null");
+        $q->addQuery("tododate != 'infinity'");
         $timerhourlimit = getParam("FDL_TIMERHOURLIMIT", 2);
         $q->addQuery("tododate < now() - interval '$timerhourlimit hour'");
         $q->order_by = 'tododate';
@@ -82,6 +83,9 @@ function timers_admin_result(Action & $action)
         foreach ($t as $k => $v) {
             $t[$k]["hact"] = humanactions($v["actions"], $dbaccess);
             $t[$k]["hdelay"] = computehumandelay($v["tododate"]);
+            if ($v["tododate"] === 'infinity') {
+                 $t[$k]["tododate"] = '';
+            }
         }
     }
     $action->lay->setBlockData("TIMERS", $t);
@@ -91,6 +95,9 @@ function timers_admin_result(Action & $action)
 function computehumandelay($tdate)
 {
     if (!$tdate) return '';
+    if ($tdate === 'infinity') {
+        return ___("No date setting","docadmin");
+    }
     $jdnow = StringDateToJD(Doc::getTimeDate());
     $jdtdate = StringDateToJD($tdate);
     if (($jdtdate - $jdnow) < 0) $hd = "- ";
