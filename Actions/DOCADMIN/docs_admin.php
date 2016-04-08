@@ -1,7 +1,6 @@
 <?php
 /*
  * @author Anakeen
- * @license http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU Affero General Public License
  * @package FDL
 */
 /**
@@ -9,7 +8,6 @@
  *
  * @author Anakeen
  * @version $Id: freedom_frame.php,v 1.4 2005/03/24 15:06:56 eric Exp $
- * @license http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU Affero General Public License
  * @package FDL
  * @subpackage GED
  */
