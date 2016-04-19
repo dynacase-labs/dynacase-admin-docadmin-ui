@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dynacase-admin-uis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-16 11:27+0100\n"
-"PO-Revision-Date: 2014-12-16 11:27+0100\n"
+"POT-Creation-Date: 2016-04-19 17:26+0200\n"
+"PO-Revision-Date: 2016-04-19 17:27+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#, php-format
+msgctxt "docadmin"
+msgid "Add Attribute \"%s\" "
+msgstr "Ajouter un attribut \"%s\""
+
+msgid "Add new attribute"
+msgstr "Ajouter un nouvel attribut"
 
 msgid "All searches"
 msgstr "Toutes les recherches"
@@ -38,6 +46,11 @@ msgstr "Filtrer les documents"
 
 msgid "Freedom"
 msgstr "Dynacase"
+
+#, php-format
+msgctxt "docadmin"
+msgid "Modify Attribute \"%s\" "
+msgstr "Modification de l'attribute \"%s\""
 
 msgid "Next Timers"
 msgstr "Prochains minuteurs"
@@ -103,6 +116,9 @@ msgstr "ADMIN_ACTIONS_LIST"
 msgid "docadmin:DOCADMIN Access"
 msgstr "Accès à l'application DOCADMIN"
 
+msgid "docadmin:Devel mode activation"
+msgstr "Activer le mode développement"
+
 msgid "docadmin:Documents management"
 msgstr "Explorateur de documents"
 
@@ -111,6 +127,12 @@ msgstr "Exportation"
 
 msgid "docadmin:Export Access"
 msgstr "Exportation des accessibilités"
+
+msgid "docadmin:Family attributes"
+msgstr "Attributs des familles"
+
+msgid "docadmin:Modify Family attribute"
+msgstr "Modifier les attributes des familles"
 
 msgid "docadmin:Timers management"
 msgstr "Gestion des minuteurs"
@@ -123,6 +145,106 @@ msgstr "Paramétrage des documents systèmes : cycles, profils, etc."
 
 msgid "docadmin:manage documents"
 msgstr "Gestion des documents"
+
+#, php-format
+msgctxt "docadmin"
+msgid "document %s is not a family"
+msgstr "Le document \"%s\" n'est pas une famille"
+
+#, php-format
+msgctxt "docadmin"
+msgid "document %s not found"
+msgstr "Document \"%s\" noutrouvé"
+
+msgid "fva::A?"
+msgstr "R?"
+
+msgid "fva::Abstract"
+msgstr "Fait parti des attributs résumés"
+
+msgid "fva::Constraint"
+msgstr "Contrainte"
+
+msgid "fva::Danger Zone"
+msgstr "Zone de danger"
+
+msgid "fva::Elink"
+msgstr "Extra lien"
+
+msgid "fva::File"
+msgstr "Fichier PHP"
+
+msgid "fva::Frame"
+msgstr "Cadre parent"
+
+msgid "fva::Func"
+msgstr "Fonction"
+
+msgid "fva::Identifier"
+msgstr "Identifiant"
+
+msgid "fva::Link"
+msgstr "Lien"
+
+msgid "fva::N?"
+msgstr "O?"
+
+msgid "fva::Name"
+msgstr "Libellé"
+
+msgid "fva::Needed"
+msgstr "Attribut obligatoire"
+
+msgid "fva::Options"
+msgstr "Options"
+
+msgid "fva::Order"
+msgstr "Ordre"
+
+msgid "fva::T?"
+msgstr "T?"
+
+msgid "fva::Title"
+msgstr "Attribut faisant parti du titre"
+
+msgid "fva::Type"
+msgstr "Type"
+
+msgid "fva::Vi"
+msgstr "Vis."
+
+msgid "fva::Visibility"
+msgstr "Visibilité de l'attribut"
+
+msgid "fva::dangerZone"
+msgstr ""
+"La modification d'un attribut depuis le serveur est déconseillé.\n"
+"Une erreur de description peut entrainer un dysfonctionnement de votre "
+"système."
+
+msgid "fva:Cancel"
+msgstr "Annuler"
+
+msgid "fva:Close"
+msgstr "Fermer"
+
+msgid "fva:Create"
+msgstr "Créer"
+
+msgid "fva:Enter new attribute definition"
+msgstr "Définisser les caractéristiques du nouvel attribut"
+
+msgid "fva:Filter"
+msgstr "Filtrer"
+
+msgid "fva:Modify"
+msgstr "Modifier"
+
+msgid "fva:New attribute"
+msgstr "Ajouter un nouvel attribut"
+
+msgid "fva:Record"
+msgstr "Enregistrer"
 
 #, php-format
 msgid "timer:apply method %s"
@@ -144,3 +266,6 @@ msgstr "Envoi d'un courriel avec le modèle %s [%d]"
 
 #~ msgid "docadmin:short_name"
 #~ msgstr "nom abrégé"
+
+#~ msgid "fva::Id"
+#~ msgstr "Id"

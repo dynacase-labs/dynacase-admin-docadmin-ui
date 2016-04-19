@@ -1,14 +1,4 @@
 <?php
-/**
- * Application parameters 
- *
- * @author Anakeen 2002
- * @version $Id: ACCESS_init.php.in,v 1.4 2003/08/18 15:46:41 eric Exp $
- * @package FDL
- * @subpackage ACCESS
- */
-/**
- */
 
  /**
   * Application parameters 
@@ -19,7 +9,12 @@ global $app_const;
 
 $app_const= array(
   "INIT"    => "yes",
-  "VERSION" => "@VERSION@-@RELEASE@"
+  "VERSION" => "@VERSION@-@RELEASE@",
+  "DOCADMIN_DEVEL" => array(
+        "val" => "N",
+        "descr" => N_("docadmin:Devel mode activation") ,
+        "kind" => "enum(N|Y)",
+        "global" => "N"
+    )
 );
 
-?>

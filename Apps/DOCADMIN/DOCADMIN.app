@@ -76,6 +76,19 @@ $action_desc = array(
         "script"     => "export_folder.php",
         "function"   => "export_folder"
     ),
+    array(
+        "name"       => "FAMILY_VIEWATTRIBUTES",
+        "acl" => "DOCADMIN",
+        "short_name" => N_("docadmin:Family attributes"),
+        "script"     => "family_viewattributes.php",
+        "function"   => "familyViewAttributes",
+        "layout"     => "family_viewattributes.html"
+    ),
+    array(
+        "name"       => "FAMILY_MODATTRIBUTE",
+        "acl" => "DOCADMIN",
+        "short_name" => N_("docadmin:Modify Family attribute"),
+        "script"     => "family_modattribute.php",
+        "function"   => "familyModAttribute"
+    )
 );
-
-?>

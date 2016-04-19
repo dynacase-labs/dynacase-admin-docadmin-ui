@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dynacase-admin-uis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-16 11:27+0100\n"
-"PO-Revision-Date: 2013-11-29 18:18+0100\n"
+"POT-Creation-Date: 2016-04-19 17:26+0200\n"
+"PO-Revision-Date: 2016-04-19 17:34+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#, php-format
+msgctxt "docadmin"
+msgid "Add Attribute \"%s\" "
+msgstr ""
+
+msgid "Add new attribute"
+msgstr ""
 
 msgid "All searches"
 msgstr ""
@@ -38,6 +46,11 @@ msgstr ""
 
 msgid "Freedom"
 msgstr "Dynacase"
+
+#, php-format
+msgctxt "docadmin"
+msgid "Modify Attribute \"%s\" "
+msgstr ""
 
 msgid "Next Timers"
 msgstr ""
@@ -103,6 +116,9 @@ msgstr "ADMIN_ACTIONS_LIST"
 msgid "docadmin:DOCADMIN Access"
 msgstr "DOCADMIN Access"
 
+msgid "docadmin:Devel mode activation"
+msgstr ""
+
 msgid "docadmin:Documents management"
 msgstr "Documents management"
 
@@ -110,6 +126,12 @@ msgid "docadmin:Export"
 msgstr ""
 
 msgid "docadmin:Export Access"
+msgstr ""
+
+msgid "docadmin:Family attributes"
+msgstr ""
+
+msgid "docadmin:Modify Family attribute"
 msgstr ""
 
 msgid "docadmin:Timers management"
@@ -123,6 +145,105 @@ msgstr "ihm to access and manage documents"
 
 msgid "docadmin:manage documents"
 msgstr "manage documents"
+
+#, php-format
+msgctxt "docadmin"
+msgid "document %s is not a family"
+msgstr ""
+
+#, php-format
+msgctxt "docadmin"
+msgid "document %s not found"
+msgstr ""
+
+msgid "fva::A?"
+msgstr "A?"
+
+msgid "fva::Abstract"
+msgstr "Abstract"
+
+msgid "fva::Constraint"
+msgstr "Constraint"
+
+msgid "fva::Danger Zone"
+msgstr "Danger Zone"
+
+msgid "fva::Elink"
+msgstr "Elink"
+
+msgid "fva::File"
+msgstr "PHP file"
+
+msgid "fva::Frame"
+msgstr "Parent set"
+
+msgid "fva::Func"
+msgstr "PHP function"
+
+msgid "fva::Identifier"
+msgstr "Identifier"
+
+msgid "fva::Link"
+msgstr "Link"
+
+msgid "fva::N?"
+msgstr "N?"
+
+msgid "fva::Name"
+msgstr "Label"
+
+msgid "fva::Needed"
+msgstr "Needed"
+
+msgid "fva::Options"
+msgstr "Options"
+
+msgid "fva::Order"
+msgstr "Order"
+
+msgid "fva::T?"
+msgstr "T?"
+
+msgid "fva::Title"
+msgstr "In Title ?"
+
+msgid "fva::Type"
+msgstr "Type"
+
+msgid "fva::Vi"
+msgstr "Vi."
+
+msgid "fva::Visibility"
+msgstr "Visibility"
+
+msgid "fva::dangerZone"
+msgstr ""
+"Modifying an attribute from the server is not recommended.\n"
+"An error description may cause a malfunction of your system."
+
+msgid "fva:Cancel"
+msgstr "Cancel"
+
+msgid "fva:Close"
+msgstr "Close"
+
+msgid "fva:Create"
+msgstr "Create"
+
+msgid "fva:Enter new attribute definition"
+msgstr "Enter a new attribute definition"
+
+msgid "fva:Filter"
+msgstr "Filter"
+
+msgid "fva:Modify"
+msgstr "Modify"
+
+msgid "fva:New attribute"
+msgstr "New attribute"
+
+msgid "fva:Record"
+msgstr "Record"
 
 #, php-format
 msgid "timer:apply method %s"
