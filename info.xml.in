@@ -6,8 +6,10 @@
     </description>
 
     <requires>
-        <module comp='ge' version='3.2.12' name='dynacase-core'/>
+        <module comp='ge' version='3.2.21' name='dynacase-core'/>
         <module comp='ge' version='1.0.0' name='dynacase-admin'/>
+        <module name='dynacase-mustache.js-installer'/>
+        <module name="dynacase-jquery-dataTables-1.10-installer"/>
     </requires>
 
     <post-install>

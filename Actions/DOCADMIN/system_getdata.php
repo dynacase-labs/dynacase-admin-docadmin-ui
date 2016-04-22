@@ -33,7 +33,7 @@ function system_getdata(&$action)
     $data = array();
     
     $d = new_doc($action->dbaccess, $searchId);
-    if ($familyId[0] == '-') {
+    if ($familyId && $familyId[0] == '-') {
         $onlyFam = true;
         $familyId = substr($familyId, 1);
     } else {
