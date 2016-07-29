@@ -72,6 +72,9 @@ table.dataTable tbody tr.parent {
 table.dataTable tbody tr.undirect {
     color: grey;
 }
+table.dataTable tbody tr.modattr {
+    color: #5182c8;
+}
 
 .dataTables_wrapper .dataTables_filter {
     float:none;

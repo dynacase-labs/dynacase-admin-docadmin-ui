@@ -58,7 +58,7 @@ function familyViewAttributes(Action & $action)
         $attrs[$v["id"]] = $v;
         unset($attrs[$k]);
     }
-    
+    $ModPostFix=" [*]";
     $oDocAttr = new DocAttr($dbaccess);
     $oAttrs = $family->getAttributes();
     /**
@@ -93,13 +93,52 @@ function familyViewAttributes(Action & $action)
             $attrs[$oa->id] = $oDocAttr->getValues();
             $attrs[$oa->id]["direct"] = "undirect";
         } else {
-            
             $attrs[$oa->id]["direct"] = "direct";
+            $currentType=$oa->type;
+            if (!empty($oa->format)) {
+                $currentType.='("'.$oa->format.'")';
+            }
+            if ($currentType != $attrs[$oa->id]["type"]) {
+                $attrs[$oa->id]["type"]=$currentType.$ModPostFix;
+            $attrs[$oa->id]["direct"] = "modattr";
+            }
+            if ($oa->labelText != $attrs[$oa->id]["labeltext"]) {
+                $attrs[$oa->id]["labeltext"]=$oa->labelText.$ModPostFix;
+                $attrs[$oa->id]["direct"] = "modattr";
+            }
+            if (!empty($oa->ordered) && $oa->ordered != $attrs[$oa->id]["ordered"]) {
+                $attrs[$oa->id]["ordered"]=$oa->ordered.$ModPostFix;
+                $attrs[$oa->id]["direct"] = "modattr";
+            }
+            if ($oa->visibility != $attrs[$oa->id]["visibility"]) {
+                $attrs[$oa->id]["visibility"]=$oa->visibility.$ModPostFix;
+                $attrs[$oa->id]["direct"] = "modattr";
+            }
+            if ($oa->options != $attrs[$oa->id]["options"]) {
+                $attrs[$oa->id]["options"]=$oa->options.$ModPostFix;
+                $attrs[$oa->id]["direct"] = "modattr";
+            }
+            if (!empty($oa->link) && ($oa->link != $attrs[$oa->id]["link"])) {
+                $attrs[$oa->id]["link"]=$oa->link.$ModPostFix;
+                $attrs[$oa->id]["direct"] = "modattr";
+            }
+            if (!empty($oa->elink) && ($oa->elink != $attrs[$oa->id]["elink"])) {
+                $attrs[$oa->id]["elink"]=$oa->elink.$ModPostFix;
+                $attrs[$oa->id]["direct"] = "modattr";
+            }
+            if (!empty($oa->phpfunc) && ($oa->phpfunc != $attrs[$oa->id]["phpfunc"])) {
+                $attrs[$oa->id]["phpfunc"]=$oa->phpfunc.$ModPostFix;
+                $attrs[$oa->id]["direct"] = "modattr";
+            }
+            if (!empty($oa->phpfile) && ($oa->phpfile != $attrs[$oa->id]["phpfile"])) {
+                $attrs[$oa->id]["phpfile"]=$oa->phpfile.$ModPostFix;
+                $attrs[$oa->id]["direct"] = "modattr";
+            }
         }
         if (isset($attrs[$oa->id]["type"])) {
             $attrs[$oa->id]["simpletype"] = strtok($attrs[$oa->id]["type"], "(");
             $attrs[$oa->id]["inherit"] = ($attrs[$oa->id]["docid"] !== $family->id) ? "parent" : "self";
-            $attrs[$oa->id]["displayOrder"] = $attrs[$oa->id]["ordered"];
+            $attrs[$oa->id]["displayOrder"] = intval($attrs[$oa->id]["ordered"]);
             if ($attrs[$oa->id]["type"] === "menu") {
                 $attrs[$oa->id]["displayOrder"]+= 10000000;
             }
