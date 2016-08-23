@@ -44,30 +44,41 @@ function familyViewAttributes(Action & $action)
             $parents[$docParent->id] = array(
                 'id' => $docParent->id,
                 "name" => $docParent->name,
-                "title" => $docParent->getTitle(),
+                "title" => $docParent->getTitle() ,
                 "icon" => $docParent->getIcon("", 16)
             );
         }
     }
     
     $sql = sprintf("select * from docattr where docid in (%s) and usefor != 'Q' and id !~ '^:' order by ordered", implode(',', $fromids));
-    $attrs = [];
-    simpleQuery($action->dbaccess, $sql, $attrs);
+    $dbAttrs = [];
+    simpleQuery($action->dbaccess, $sql, $dbAttrs);
+    $sql = sprintf("select id, docid from docattr where docid in (%s) and usefor != 'Q' and id ~ '^:' order by ordered", implode(',', $fromids));
     
-    foreach ($attrs as $k => $v) {
-        $attrs[$v["id"]] = $v;
-        unset($attrs[$k]);
+    simpleQuery($action->dbaccess, $sql, $dbModAttr);
+    
+    foreach ($dbAttrs as $k => $v) {
+        $dbAttrs[$v["id"]] = $v;
+        unset($dbAttrs[$k]);
     }
-    
+    $ModPostFix = " [*]";
     $oDocAttr = new DocAttr($dbaccess);
     $oAttrs = $family->getAttributes();
+    $family->attributes->orderAttributes(true);
+    
+    $relativeOrder = 0;
     /**
      * @var NormalAttribute $oa
      */
     foreach ($oAttrs as $oa) {
         // Usefor = 'A' => action attributes (deprecated)
         if ($oa->usefor === "Q") continue;
-        if (empty($attrs[$oa->id])) {
+        if ($oa->getOption("relativeOrder")) {
+            $oa->ordered = $oa->getOption("relativeOrder");
+            $oa->options = preg_replace("/(relativeOrder=[a-zA-Z0-9_:]+)/", "", $oa->options);
+        }
+        
+        if (empty($dbAttrs[$oa->id])) {
             
             if ($oa->id === "FIELD_HIDDENS") continue;
             $oDocAttr->id = $oa->id;
@@ -90,47 +101,100 @@ function familyViewAttributes(Action & $action)
             $oDocAttr->phpfunc = $oa->phpfunc;
             $oDocAttr->phpconstraint = $oa->phpconstraint;
             
-            $attrs[$oa->id] = $oDocAttr->getValues();
-            $attrs[$oa->id]["direct"] = "undirect";
+            $dbAttrs[$oa->id] = $oDocAttr->getValues();
+            $dbAttrs[$oa->id]["direct"] = "undirect";
         } else {
-            
-            $attrs[$oa->id]["direct"] = "direct";
-        }
-        if (isset($attrs[$oa->id]["type"])) {
-            $attrs[$oa->id]["simpletype"] = strtok($attrs[$oa->id]["type"], "(");
-            $attrs[$oa->id]["inherit"] = ($attrs[$oa->id]["docid"] !== $family->id) ? "parent" : "self";
-            $attrs[$oa->id]["displayOrder"] = $attrs[$oa->id]["ordered"];
-            if ($attrs[$oa->id]["type"] === "menu") {
-                $attrs[$oa->id]["displayOrder"]+= 10000000;
+            $dbAttrs[$oa->id]["direct"] = "direct";
+            $currentType = $oa->type;
+            if (!empty($oa->format)) {
+                $currentType.= '("' . $oa->format . '")';
             }
-            if ($attrs[$oa->id]["type"] === "action") {
-                $attrs[$oa->id]["displayOrder"]+= 20000000;
+            if ($currentType != $dbAttrs[$oa->id]["type"]) {
+                $dbAttrs[$oa->id]["type"] = $currentType . $ModPostFix;
+            }
+            if ($oa->labelText != $dbAttrs[$oa->id]["labeltext"]) {
+                
+                $dbAttrs[$oa->id]["labeltext"] = $oa->labelText . $ModPostFix;
+            }
+            if (!empty($oa->ordered) && $oa->ordered != $dbAttrs[$oa->id]["ordered"]) {
+                if (preg_match("/relativeOrder=([a-zA-Z0-9_:]+)/", $dbAttrs[$oa->id]["options"], $reg)) {
+                    
+                    $dbAttrs[$oa->id]["ordered"] = $reg[1];
+                    if ($oa->ordered !== $reg[1]) {
+                        
+                        $dbAttrs[$oa->id]["ordered"] = $oa->ordered . $ModPostFix;
+                    }
+                    $dbAttrs[$oa->id]["options"] = preg_replace("/(relativeOrder=[a-zA-Z0-9_:]+)/", "", $dbAttrs[$oa->id]["options"]);
+                }
+            }
+            if ($oa->visibility != $dbAttrs[$oa->id]["visibility"]) {
+                $dbAttrs[$oa->id]["visibility"] = $oa->visibility . $ModPostFix;
+            }
+            if ($oa->options != $dbAttrs[$oa->id]["options"]) {
+                $dbAttrs[$oa->id]["options"] = $oa->options . $ModPostFix;
+            }
+            if (!empty($oa->link) && ($oa->link != $dbAttrs[$oa->id]["link"])) {
+                $dbAttrs[$oa->id]["link"] = $oa->link . $ModPostFix;
+            }
+            if (!empty($oa->elink) && ($oa->elink != $dbAttrs[$oa->id]["elink"])) {
+                $dbAttrs[$oa->id]["elink"] = $oa->elink . $ModPostFix;
+            }
+            if (!empty($oa->phpfunc) && ($oa->phpfunc != $dbAttrs[$oa->id]["phpfunc"])) {
+                $dbAttrs[$oa->id]["phpfunc"] = $oa->phpfunc . $ModPostFix;
+            }
+            if (!empty($oa->phpfile) && ($oa->phpfile != $dbAttrs[$oa->id]["phpfile"])) {
+                $dbAttrs[$oa->id]["phpfile"] = $oa->phpfile . $ModPostFix;
+            }
+        }
+        
+        if (isset($dbAttrs[$oa->id]["type"])) {
+            $dbAttrs[$oa->id]["simpletype"] = strtok($dbAttrs[$oa->id]["type"], "(");
+            $dbAttrs[$oa->id]["inherit"] = ($dbAttrs[$oa->id]["docid"] !== $family->id) ? "parent" : "self";
+            $dbAttrs[$oa->id]["displayOrder"] = $relativeOrder++;
+            if ($dbAttrs[$oa->id]["type"] === "menu") {
+                $dbAttrs[$oa->id]["displayOrder"]+= 10000000;
+            }
+            if ($dbAttrs[$oa->id]["type"] === "action") {
+                $dbAttrs[$oa->id]["displayOrder"]+= 20000000;
+            }
+        }
+        
+        foreach ($dbModAttr as $modAttr) {
+            if ($modAttr["id"] === ":" . $oa->id && $modAttr["docid"] == $oa->docid) {
+                $dbAttrs[$oa->id]["direct"] = "modattr";
             }
         }
     }
-    
+    /*
     foreach ($oAttrs as $aid => $oa) {
-        if ($oa->usefor !== "Q" && $oa->type === "frame") {
-            $attrs[$aid]["displayOrder"] = viewFamilyUtil::getDisplayOrder($aid, $oAttrs);
-            $oAttrs[$aid]->ordered = $attrs[$aid]["displayOrder"];
+        if ($oa->usefor !== "Q" && $oa->type === "frame" && $oa->type === "frame") {
+            $dbAttrs[$aid]["displayOrder"] = viewFamilyUtil::getDisplayOrder($aid, $oAttrs);
+            $oAttrs[$aid]->ordered = $dbAttrs[$aid]["displayOrder"];
         };
     }
+    
     foreach ($oAttrs as $oa) {
         if ($oa->usefor !== "Q" && $oa->type === "tab") {
-            $attrs[$oa->id]["displayOrder"] = viewFamilyUtil::getDisplayOrder($oa->id, $oAttrs);
+            $dbAttrs[$oa->id]["displayOrder"] = viewFamilyUtil::getDisplayOrder($oa->id, $oAttrs);
         };
-    }
+    }*/
     
-    unset($attrs["FIELD_HIDDENS"]);
-    foreach ($attrs as & $attr) {
+    unset($dbAttrs["FIELD_HIDDENS"]);
+    foreach ($dbAttrs as & $attr) {
         if (($attr["type"] === "tab" || $attr["type"] === "frame")) {
-            $attr["ordered"] = "";
+            if (is_numeric($attr["ordered"])) {
+                $attr["ordered"] = "";
+            }
         };
+        
+        if (!empty($attr["ordered"]) && !is_numeric($attr["ordered"])) {
+            $attr["options"] = preg_replace("/(relativeOrder=[a-zA-Z0-9_:]+)/", "", $attr["options"]);
+        }
         $attr["pathId"] = viewFamilyUtil::getPathId($oAttrs[$attr["id"]]);
     }
     
-    uasort($attrs, 'viewFamilyUtil::reOrderAttr');
-    $action->lay->eSetBlockData("ATTRIBUTES", $attrs);
+    uasort($dbAttrs, 'viewFamilyUtil::reOrderAttr');
+    $action->lay->eSetBlockData("ATTRIBUTES", $dbAttrs);
     
     $selectclass = array();
     $tclassdoc = GetClassesDoc($dbaccess, $action->user->id, 0, "TABLE");
@@ -211,6 +275,6 @@ class viewFamilyUtil
             return 0;
         }
         
-        return 1 + getAttributeProfunder($oa["frameid"], $attrs);
+        return 1 + $this->getAttributeProfunder($oa["frameid"], $attrs);
     }
 }
