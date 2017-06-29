@@ -37,7 +37,7 @@ function familyViewAttributes(Action & $action)
     
     $action->lay->set("famIcon", $family->getIcon("", 16));
     $fromids = $family->getFromDoc();
-    $parents = [];
+    $parents = $ancestrors = [];
     foreach ($fromids as $parentId) {
         $docParent = new_doc($action->dbaccess, $parentId);
         if ($docParent->id != $family->id) {
@@ -47,8 +47,10 @@ function familyViewAttributes(Action & $action)
                 "title" => $docParent->getTitle() ,
                 "icon" => $docParent->getIcon("", 16)
             );
+            $ancestrors[$docParent->name] = $docParent;
         }
     }
+    $ancestrors = array_reverse($ancestrors, true);
     
     $sql = sprintf("select * from docattr where docid in (%s) and usefor != 'Q' and id !~ '^:' order by ordered", implode(',', $fromids));
     $dbAttrs = [];
@@ -125,6 +127,19 @@ function familyViewAttributes(Action & $action)
                         $dbAttrs[$oa->id]["ordered"] = $oa->ordered . $ModPostFix;
                     }
                     $dbAttrs[$oa->id]["options"] = preg_replace("/(relativeOrder=[a-zA-Z0-9_:]+)/", "", $dbAttrs[$oa->id]["options"]);
+                }
+            } else {
+                if (!empty($oa->ordered) && is_numeric($oa->ordered) && $ancestrors) {
+                    /**
+                     * @var \Doc $ancestror
+                     */
+                    foreach ($ancestrors as $ancestror) {
+                        $parentOa = $ancestror->getAttribute($oa->id);
+                        if ($parentOa && $parentOa->getOption("relativeOrder")) {
+                            $dbAttrs[$oa->id]["ordered"] = $parentOa->getOption("relativeOrder");
+                            break;
+                        }
+                    }
                 }
             }
             if ($oa->visibility != $dbAttrs[$oa->id]["visibility"]) {
