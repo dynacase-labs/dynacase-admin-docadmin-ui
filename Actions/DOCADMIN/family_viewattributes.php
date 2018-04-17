@@ -118,6 +118,12 @@ function familyViewAttributes(Action & $action)
                 
                 $dbAttrs[$oa->id]["labeltext"] = $oa->labelText . $ModPostFix;
             }
+            if ($oa->ordered != $dbAttrs[$oa->id]["ordered"] && $oa->ordered) {
+                $dbAttrs[$oa->id]["ordered"] = $oa->ordered . $ModPostFix;
+            }
+            if ( $oa->fieldSet && $oa->fieldSet->id != $dbAttrs[$oa->id]["frameid"] && $oa->fieldSet->id) {
+                $dbAttrs[$oa->id]["frameid"] = $oa->fieldSet->id . $ModPostFix;
+            }
             if (!empty($oa->ordered) && $oa->ordered != $dbAttrs[$oa->id]["ordered"]) {
                 if (preg_match("/relativeOrder=([a-zA-Z0-9_:]+)/", $dbAttrs[$oa->id]["options"], $reg)) {
                     
